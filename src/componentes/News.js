@@ -14,36 +14,6 @@ const News = (props) => {
         return word[0].toUpperCase() + word.substring(1).toLowerCase();
     }
 
-        useEffect(() => {
-        //updateNews();
-       // document.title = `${toTitleCase(props.category)} | Top Headlines`
-        //setPage(page+1)
-    }, []);
-
-    // useEffect(() => {
-
-    // }, []);
-
-    const fetchNews = async () =>{
-        const url = await fetch('https://free-news.p.rapidapi.com/v1/search?q=Business&lang=en&page=1&page_size=15', {
-            method: 'GET',
-            headers: {
-                'X-RapidAPI-Key': 'fbb2ea18dbmsh78e40cf6bb77620p1f3b5djsn040bc7202c51',
-                'X-RapidAPI-Host': 'free-news.p.rapidapi.com'
-            }
-        })
-        let data = await fetch(url);
-       
-        props.setProgress(30);
-        let parsedDate = await data.json();
-        console.log(data)
-        props.setProgress(70);
-       // setArticles(parsedDate.articles)
-       // setTotalResults(parsedDate.totalResults)
-        setLoading(false)
-        props.setProgress(100);
-    }
-
     const updateNews = async ()=> {
         props.setProgress(0);
         // const url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.apikey}&page=${page}&pageSize=${props.pageSize}`;
@@ -61,11 +31,22 @@ const News = (props) => {
         let parsedDate = await data.json();
         console.log(data)
         props.setProgress(70);
-       // setArticles(parsedDate.articles)
-       // setTotalResults(parsedDate.totalResults)
+       setArticles(parsedDate.articles)
+       setTotalResults(parsedDate.totalResults)
         setLoading(false)
         props.setProgress(100);
     }
+
+
+    useEffect(() => {
+        updateNews();
+        document.title = `${toTitleCase(props.category)} | Top Headlines`
+        setPage(page+1)
+    }, []);
+
+    
+
+    
 
    
 
@@ -81,20 +62,20 @@ const News = (props) => {
         //         'X-RapidAPI-Host': 'free-news.p.rapidapi.com'
         //     }
         // };
-        // const url = await fetch('https://free-news.p.rapidapi.com/v1/search?q=Business&lang=en&page=1&page_size=15', {
-        //     method: 'GET',
-        //     headers: {
-        //         'X-RapidAPI-Key': 'fbb2ea18dbmsh78e40cf6bb77620p1f3b5djsn040bc7202c51',
-        //         'X-RapidAPI-Host': 'free-news.p.rapidapi.com'
-        //     }
-        // })
+        const url = await fetch('https://free-news.p.rapidapi.com/v1/search?q=Business&lang=en&page=1&page_size=15', {
+            method: 'GET',
+            headers: {
+                'X-RapidAPI-Key': 'fbb2ea18dbmsh78e40cf6bb77620p1f3b5djsn040bc7202c51',
+                'X-RapidAPI-Host': 'free-news.p.rapidapi.com'
+            }
+        })
 
-        // let data = await fetch(url);
-        // let parsedDate = await data.json();
-        // setPage(page+1)
-        // setArticles(articles.concat(parsedDate.articles))
-        // setTotalResults(parsedDate.totalResults)
-        // setLoading(false)
+        let data = await fetch(url);
+        let parsedDate = await data.json();
+        setPage(page+1)
+        setArticles(articles.concat(parsedDate.articles))
+        setTotalResults(parsedDate.totalResults)
+        setLoading(false)
     };
 
 
